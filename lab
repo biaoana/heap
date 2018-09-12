@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<limits.h>
+
+int heap[1000000], heapSize;
+void Init() {
+    heapSize = 0;
+    heap[0] = -INT_MAX;
+}
+
+void Insert( int element ) {
+    heapSize++;
+    heap[heapSize] = element;
+    int now = heapSize;
+    while ( heap[now / 2] > element ) {
+        heap[now] = heap[now / 2];
+        now /= 2;
+    }
+    heap[now] = element;
+}
+
+
+void search_number( int number_of_elements )
+{
+    int x, iter, ok;
+     printf("Give the number you want to search : ");
+    scanf("%d ", &x);
+    for ( iter = 1 ; iter <= number_of_elements ; iter++ ) {
+        if( x == heap[iter] )
+            ok = 1;
+    }
+    if( ok == 1 )
+        printf("Number Found \n");
+    else
+        printf("Number not Found \n ");
+}
+void delete_number( int number_of_elements )
+{
+    int y, position, iter, ok;
+     printf("Give the number you want to delete : ");
+    scanf("%d ", &y);
+    for ( iter = 1 ; iter <= number_of_elements ; iter++ ) {
+        if( y == heap[iter] )
+        {   position = iter;
+            ok = 1;
+        }
+    }
+    if( ok == 1 ){
+       for( iter = position ; iter < number_of_elements ; iter++ )
+                heap[iter] = heap[iter+1];
+                number_of_elements--;
+                for ( iter = 1 ; iter <= number_of_elements ; iter++ )
+                    printf("%d", heap[iter]);
+     }
+    else
+        printf("Number not Found \n ");
+}
+
+
+int main() {
+    int number_of_elements;
+    printf("Program to demonstrate Heap:\nEnter the number of elements: ");
+    scanf("%d", &number_of_elements);
+    int iter, element;
+    Init();
+    printf("Enter the elements: ");
+    for (iter = 1; iter <= number_of_elements; iter++) {
+        scanf("%d", &element);
+        Insert(element);
+    }
+    search_number(number_of_elements);
+    delete_number(number_of_elements);
+    return 0;
+}
